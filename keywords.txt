@@ -1,0 +1,28 @@
+#######################################
+# Syntax Coloring Map For Sensor
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+SensorBase	KEYWORD1
+Sensor	KEYWORD1
+AsyncSensor	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+#SensorBase
+requestValue	KEYWORD2
+refreshValue	KEYWORD2
+
+#Sensor
+getRefreshedValue	KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
