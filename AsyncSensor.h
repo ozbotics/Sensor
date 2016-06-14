@@ -19,8 +19,11 @@ class AsyncSensor : public Sensor<T> {
   public:
    /**
     * Constructor
-    */  
-    AsyncSensor() : Sensor<T>() {}
+    *
+    * @param maxValue The maximum reasonable value
+    * @param minValue The minimum reasonable value
+   */  
+    AsyncSensor(T maxValue, T minValue) : Sensor<T>(maxValue, minValue) {}
 };
   
 #endif // ASYNC_SENSOR_H

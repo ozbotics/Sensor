@@ -38,17 +38,23 @@ class SensorBase {
  */
 template <typename T>
 class Sensor : public SensorBase {
+  protected:
+    T _minValue;
+    T _maxValue;
+    
   public:
     Value<T>* value;  /**< public variable  value  The value of the last sensor reading  */
     
    /**
     * Constructor
     *
+    * @param maxValue The maximum reasonable value (used in inBounds() check)
+    * @param minValue The minimum reasonable value (used in inBounds() check)
     * @param displayLength The total width of the output string.
     * @param displayDecimals The number of decimal places.
     * @param divideBy Divide the value by this amount, eg; 60000 to convert milliseconds to minutes.
     */
-    Sensor(byte displayLength=1, byte displayDecimals=0, unsigned int divideBy=1) : SensorBase() {
+    Sensor(T maxValue=0, T minValue=0, byte displayLength=1, byte displayDecimals=0, unsigned int divideBy=1) : _maxValue(maxValue), _minValue(minValue), SensorBase() {
       value = new Value<T>();
     
       value->setDisplayLength(displayLength);
@@ -86,6 +92,33 @@ class Sensor : public SensorBase {
       
       return value->getValue();
     }
+    
+  protected:
+   /**
+    * check if the candidate value is within bounds
+    *
+    * Note: maxValue is not considered if maxValue & minValue have at default values
+    *
+    * @param candidateValue The candidate value
+    * @return true if candidateValue is between minValue & maxValue
+    */
+    bool _inBounds(T candidateValue) {
+      return ((candidateValue >= _minValue) && ( ((_minValue == 0) && (_maxValue == 0)) || (candidateValue <= _maxValue) ));
+    }
+    
+   /**
+    * update the sensor value
+    *
+    * Note: if the value is not inBounds, it will be ignored
+    *
+    * @param val The candidate value
+    */
+    void _updateValue(T val) {
+      if (_inBounds(val)) {
+        value->setValue(val);
+      }
+    }
+
 };
   
 #endif //_SENSOR_H
