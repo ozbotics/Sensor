@@ -6,7 +6,7 @@
   #define _SENSOR_H
   
 #include <Arduino.h>
-#include <Value.h>
+#include <SensorValue.h>
 
 /**
  * The base of all Sensors
@@ -43,7 +43,7 @@ class Sensor : public SensorBase {
     T _maxValue;
     
   public:
-    Value<T>* value;  /**< public variable  value  The value of the last sensor reading  */
+    SensorValue<T>* value;  /**< public variable  value  The value of the last sensor reading  */
     
    /**
     * Constructor
@@ -55,7 +55,7 @@ class Sensor : public SensorBase {
     * @param divideBy Divide the value by this amount, eg; 60000 to convert milliseconds to minutes.
     */
     Sensor(T maxValue=0, T minValue=0, byte displayLength=1, byte displayDecimals=0, unsigned int divideBy=1) : _maxValue(maxValue), _minValue(minValue), SensorBase() {
-      value = new Value<T>();
+      value = new SensorValue<T>(this);
     
       value->setDisplayLength(displayLength);
       value->setDisplayDecimals(displayDecimals);
@@ -76,6 +76,13 @@ class Sensor : public SensorBase {
     */
     virtual unsigned long requestValue()=0;
 
+    
+   /**
+    * implement this to define how the sensor is initialised
+    */
+    virtual void initValue(T value) {} 
+    
+    
    /**
     * implement this to define how the sensor is queried for the reading
     */
