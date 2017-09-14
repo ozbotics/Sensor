@@ -36,7 +36,7 @@ class SensorValue : public Value<T> {
     virtual void persistValue() {
       Value<T>::persistValue();
 
-      Serial.println("SensorValue::persistValue()");
+      //Serial.println("SensorValue::persistValue()");
       _sensor->initValue(Value<T>::getValue());
     }
     
