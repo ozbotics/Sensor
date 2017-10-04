@@ -42,7 +42,7 @@ class TempDepSensor {
     * @return the number of milliseconds to wait before confirming the operation suceeded
     */
     unsigned long setTemperatureAsync(unsigned int value) {
-      return setTemperatureAsync((float)value / 100);
+      return setTemperatureAsync((float)value / 10);
     }
     
    /**
@@ -53,7 +53,7 @@ class TempDepSensor {
     * @return true if the operation suceeded
     */
     bool setTemperatureSync(unsigned int temperature) {
-      return setTemperatureSync((float)temperature / 100);
+      return setTemperatureSync((float)temperature / 10);
     }
 };
 
