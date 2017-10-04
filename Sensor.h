@@ -29,6 +29,8 @@ class SensorBase {
     * implement this to define how the sensor is queried for the reading
     */
     virtual void refreshValue() =0;
+    
+    virtual bool hasSuspectValue() =0;
 };
 
 /**
@@ -99,6 +101,12 @@ class Sensor : public SensorBase {
       
       return value->getValue();
     }
+    
+    virtual bool hasSuspectValue() {
+      // by default, value is suspect if it is at the extreme range of possible values
+      return ((value->getValue() == _minValue) || (value->getValue() == _maxValue));
+    }
+    
     
   protected:
    /**
