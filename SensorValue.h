@@ -6,6 +6,7 @@
   #define _SENSOR_VALUE_H
 
 #include <Value.h>
+#include <FilteredValue.h>
 #include <Sensor.h>
 
 template <typename T>
@@ -16,7 +17,7 @@ class Sensor;
   *  Value that is able to initialize a Sensor
 */
 template <class T>
-class SensorValue : public Value<T> {
+class SensorValue : public FilteredValue<T> {
   protected:
     Sensor<T>* _sensor;
     
@@ -27,7 +28,7 @@ class SensorValue : public Value<T> {
     * @param displayDecimals The number of decimal places.
     * @param divideBy Divide the value by this amount, eg; 60000 to convert milliseconds to minutes.
     */  
-    SensorValue(Sensor<T>* sensor, byte displayLength=1, byte displayDecimals=0, unsigned int divideBy=1) : _sensor(sensor), Value<T>(displayLength, displayDecimals, divideBy) { }
+    SensorValue(Sensor<T>* sensor, byte displayLength=1, byte displayDecimals=0, unsigned int divideBy=1) : _sensor(sensor), FilteredValue<T>(displayLength, displayDecimals, divideBy) { }
     
    /**
     * persist the value to the Sensor (set the Sensor's initial value)
